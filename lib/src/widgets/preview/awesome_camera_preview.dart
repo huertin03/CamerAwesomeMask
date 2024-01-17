@@ -200,7 +200,12 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                                   child: snapshot.data!.preview,
                                 )),
                               ])
-                            : _textures.first;
+                            : Stack(
+                                children: [
+                                  _textures.first,
+                                  const Text('Algo anda mal'),
+                                ],
+                              );
                       },
                     ),
                   ),
