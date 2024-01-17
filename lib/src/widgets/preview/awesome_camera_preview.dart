@@ -202,8 +202,8 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                               ])
                             : Stack(
                                 children: [
-                                  _textures.first,
                                   const Text('Algo anda mal'),
+                                  _textures.first,
                                 ],
                               );
                       },
