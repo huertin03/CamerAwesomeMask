@@ -148,10 +148,23 @@ class Bourdeaux extends CustomPainter {
     Paint clearPaint = Paint()..blendMode = BlendMode.clear;
 
     // Draw everything outside the shape
-    canvas.drawRect(Rect.fromLTWH(-128, 0, 395, size.height), fillPaint);
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), fillPaint);
 
-    // Draw the wine bottle shape (to be cleared)
-    canvas.drawPath(path_0, clearPaint);
+    // Calculate the bounding rectangle of the path
+    Rect rect = path_0.getBounds();
+
+// Calculate the center of the path
+    Offset pathCenter = rect.center;
+
+// Calculate the center of the canvas
+    Offset center = Offset(size.width / 2, size.height / 2);
+
+// Calculate the translation offset
+    Offset offset = center - pathCenter;
+
+// Translate the path
+    Path centeredPath = path_0.shift(offset);
+    canvas.drawPath(centeredPath, clearPaint);
   }
 
   @override
