@@ -28,7 +28,7 @@ class AwesomeMask {
   static AwesomeMask get BourdeauxBottle => AwesomeMask(
         name: 'Bordeaux',
         outputFilter: CustomPaint(
-          size: Size(137.65, (137.65 * 3.806167400881057).toDouble()),
+          size: Size(537.65, (537.65 * 3.806167400881057).toDouble()),
           painter: Bourdeaux(),
           foregroundPainter: Bourdeaux(),
         ),
