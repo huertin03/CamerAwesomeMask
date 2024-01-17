@@ -192,6 +192,7 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                       //FIX performances
                       stream: widget.state.filter$,
                       builder: (context, snapshot) {
+                        print(snapshot.data?.name ?? 'No tiene data');
                         return snapshot.hasData
                             ? Stack(alignment: Alignment.center, children: [
                                 _textures.first,
@@ -200,12 +201,7 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                                   child: snapshot.data!.preview,
                                 )),
                               ])
-                            : Stack(
-                                children: [
-                                  const Text('Algo anda mal'),
-                                  _textures.first,
-                                ],
-                              );
+                            : _textures.first;
                       },
                     ),
                   ),
