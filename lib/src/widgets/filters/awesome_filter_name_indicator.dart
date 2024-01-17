@@ -1,4 +1,5 @@
 import 'package:camerawesome/camerawesome_plugin.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
 import 'package:flutter/material.dart';
 
 class AwesomeFilterNameIndicator extends StatelessWidget {
@@ -11,8 +12,8 @@ class AwesomeFilterNameIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<AwesomeFilter>(
-      stream: state.filter$,
+    return StreamBuilder<AwesomeMask>(
+      stream: state.filter$, // is mask
       builder: (context, snapshot) {
         return snapshot.hasData
             ? Container(

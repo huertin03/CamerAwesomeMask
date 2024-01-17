@@ -6,7 +6,9 @@ import 'package:camerawesome/pigeon.dart';
 import 'package:camerawesome/src/logger.dart';
 import 'package:camerawesome/src/orchestrator/adapters/pigeon_sensor_adapter.dart';
 import 'package:camerawesome/src/orchestrator/models/camera_physical_button.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
 import 'package:collection/collection.dart';
+import 'package:colorfilter_generator/presets.dart';
 import 'package:flutter/services.dart';
 
 export 'src/camera_characteristics/camera_characteristics.dart';
@@ -20,7 +22,7 @@ export 'src/orchestrator/analysis/analysis_to_image.dart';
 export 'src/orchestrator/models/analysis/analysis_canvas.dart';
 
 // filters
-export 'src/orchestrator/models/filters/awesome_filters.dart';
+// export 'src/orchestrator/models/filters/awesome_filters.dart';
 
 // built in widgets
 export 'src/widgets/widgets.dart';
@@ -519,8 +521,10 @@ class CamerawesomePlugin {
     return CameraInterface().stopAnalysis();
   }
 
-  static Future<void> setFilter(AwesomeFilter filter) {
-    return CameraInterface().setFilter(filter.matrix);
+  static Future<void> setMask(AwesomeMask mask) {
+    // return CameraInterface().setFilter(filter.matrix);
+    // changed in order to get the camera interface always without a filter
+    return CameraInterface().setFilter(PresetFilters.none.matrix);
   }
 
   static Future<void> setMirrorFrontCamera(bool mirrorFrontCamera) {

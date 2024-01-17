@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
@@ -11,9 +11,10 @@ class FilterHandler {
 
   Future<void> apply({
     required CaptureRequest captureRequest,
-    required AwesomeFilter filter,
+    // required AwesomeFilter filter,
   }) async {
-    if (Platform.isIOS && filter.id != AwesomeFilter.None.id) {
+    // Commented because filter is None always
+    /* if (Platform.isIOS && filter.id != AwesomeFilter.None.id) {
       photoFilterIsolate?.kill(priority: Isolate.immediate);
 
       ReceivePort port = ReceivePort();
@@ -25,7 +26,7 @@ class FilterHandler {
       await port.first;
 
       photoFilterIsolate?.kill(priority: Isolate.immediate);
-    }
+    }*/
   }
 }
 
@@ -46,7 +47,8 @@ Future<CaptureRequest> applyFilter(PhotoFilterModel model) async {
     }
 
     final pixels = image.getBytes();
-    model.filter.apply(pixels, image.width, image.height);
+    // commented because filter is None always
+    // model.filter.apply(pixels, image.width, image.height);
     final img.Image out = img.Image.fromBytes(
       width: image.width,
       height: image.height,

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
 import 'package:camerawesome/src/orchestrator/camera_context.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
 import 'package:camerawesome/src/orchestrator/states/handlers/filter_handler.dart';
 import 'package:camerawesome/src/photofilters/filters/filters.dart';
 import 'package:collection/collection.dart';
@@ -86,7 +87,7 @@ class PhotoCameraState extends CameraState {
       if (succeeded) {
         await FilterHandler().apply(
           captureRequest: captureRequest,
-          filter: filter,
+          // filter: filter,
         );
 
         _mediaCapture = MediaCapture.success(captureRequest: captureRequest);
@@ -104,10 +105,10 @@ class PhotoCameraState extends CameraState {
     return captureRequest;
   }
 
-  bool get hasFilters => cameraContext.availableFilters?.isNotEmpty ?? false;
+  bool get hasFilters => cameraContext.availableMasks?.isNotEmpty ?? false;
 
-  List<AwesomeFilter>? get availableFilters =>
-      cameraContext.availableFilters?.toList();
+  List<AwesomeMask>? get availableFilters =>
+      cameraContext.availableMasks?.toList();
 
   /// PRIVATES
 

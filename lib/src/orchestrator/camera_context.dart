@@ -6,6 +6,7 @@ import 'dart:ui';
 
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// This class handle the current state of the camera
@@ -15,9 +16,9 @@ class CameraContext {
   /// Listen current state from child widgets
   late final BehaviorSubject<CameraState> stateController;
 
-  late final BehaviorSubject<AwesomeFilter> filterController;
+  late final BehaviorSubject<AwesomeMask> maskController;
 
-  late final BehaviorSubject<bool> filterSelectorOpened;
+  late final BehaviorSubject<bool> maskSelectorOpened;
 
   /// on media capturing stream controller
   late final BehaviorSubject<MediaCapture?> mediaCaptureController;
@@ -40,14 +41,14 @@ class CameraContext {
   final AnalysisController? analysisController;
 
   /// List of available filters
-  final List<AwesomeFilter>? availableFilters;
+  final List<AwesomeMask>? availableMasks;
 
   /// Preferences concerning Exif (photos metadata)
   ExifPreferences exifPreferences;
 
-  Stream<AwesomeFilter> get filter$ => filterController.stream;
+  Stream<AwesomeMask> get mask$ => maskController.stream;
 
-  Stream<bool> get filterSelectorOpened$ => filterSelectorOpened.stream;
+  Stream<bool> get maskSelectorOpened$ => maskSelectorOpened.stream;
 
   Stream<CameraState> get state$ => stateController.stream;
 
@@ -67,9 +68,9 @@ class CameraContext {
     required this.analysisController,
     required this.saveConfig,
     required this.exifPreferences,
-    required this.filterController,
+    required this.maskController,
     required this.enablePhysicalButton,
-    required this.availableFilters,
+    required this.availableMasks,
     this.onPermissionsResult,
   }) {
     var preparingState = PreparingCameraState(
@@ -77,7 +78,7 @@ class CameraContext {
       initialCaptureMode,
     );
     stateController = BehaviorSubject.seeded(preparingState);
-    filterSelectorOpened = BehaviorSubject.seeded(false);
+    maskSelectorOpened = BehaviorSubject.seeded(false);
     mediaCaptureController = BehaviorSubject.seeded(null);
   }
 
@@ -89,13 +90,13 @@ class CameraContext {
     OnImageForAnalysis? onImageForAnalysis,
     AnalysisConfig? analysisConfig,
     required ExifPreferences exifPreferences,
-    required AwesomeFilter filter,
+    required AwesomeMask mask,
     required bool enablePhysicalButton,
-    List<AwesomeFilter>? availableFilters,
+    List<AwesomeMask>? availableMasks,
   }) : this._(
           initialCaptureMode: initialCaptureMode,
           sensorConfigController: BehaviorSubject.seeded(sensorConfig),
-          filterController: BehaviorSubject.seeded(filter),
+          maskController: BehaviorSubject.seeded(mask),
           enablePhysicalButton: enablePhysicalButton,
           onPermissionsResult: onPermissionsResult,
           saveConfig: saveConfig,
@@ -106,7 +107,7 @@ class CameraContext {
                 )
               : null,
           exifPreferences: exifPreferences,
-          availableFilters: availableFilters,
+          availableMasks: availableMasks,
         );
 
   changeState(CameraState newState) async {
@@ -125,19 +126,19 @@ class CameraContext {
     // Reset filter when changing state
     // Currently camerAwesome does not support filter on video
     if (newState is VideoCameraState) {
-      filterController.add(AwesomeFilter.None);
-      filterSelectorOpened.add(false);
+      maskController.add(AwesomeMask.None);
+      maskSelectorOpened.add(false);
     }
     newState.sensorConfig.setZoom(currentZoom);
   }
 
   Future<void> toggleFilterSelector() async {
-    filterSelectorOpened.add(!filterSelectorOpened.value);
+    maskSelectorOpened.add(!maskSelectorOpened.value);
   }
 
-  Future<void> setFilter(AwesomeFilter newFilter) async {
-    await CamerawesomePlugin.setFilter(newFilter);
-    filterController.add(newFilter);
+  Future<void> setMask(AwesomeMask newMask) async {
+    await CamerawesomePlugin.setMask(newMask);
+    maskController.add(newMask);
   }
 
   Future<void> setSensorConfig(SensorConfig newConfig) async {

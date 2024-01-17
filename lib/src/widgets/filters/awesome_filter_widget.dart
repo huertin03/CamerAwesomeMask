@@ -74,7 +74,7 @@ class _AwesomeFilterWidgetState extends State<AwesomeFilterWidget> {
           children: [
             Positioned.fill(
               child: StreamBuilder<bool>(
-                stream: widget.state.filterSelectorOpened$,
+                stream: widget.state.maskSelectorOpened$,
                 builder: (_, snapshot) {
                   return AnimatedSwitcher(
                     duration: widget.animationDuration,
@@ -123,7 +123,7 @@ class _AwesomeFilterWidgetState extends State<AwesomeFilterWidget> {
       if (widget.spacer != null) widget.spacer!,
       if (widget.state is PhotoCameraState)
         StreamBuilder<bool>(
-          stream: widget.state.filterSelectorOpened$,
+          stream: widget.state.maskSelectorOpened$,
           builder: (_, snapshot) {
             return AnimatedClipRect(
               open: snapshot.data == true,

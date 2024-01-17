@@ -1,5 +1,5 @@
 import 'package:camerawesome/camerawesome_plugin.dart';
-import 'package:camerawesome/src/orchestrator/models/filters/awesome_filters.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_masks.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +36,7 @@ class _AwesomeFilterSelectorState extends State<AwesomeFilterSelector> {
   void initState() {
     super.initState();
 
-    _selected = presetsIds.indexOf(widget.state.filter.id);
+    _selected = presetsIds.indexOf(widget.state.mask.id);
 
     widget.state.previewTextureId(0).then((textureId) {
       setState(() {
@@ -59,20 +59,20 @@ class _AwesomeFilterSelectorState extends State<AwesomeFilterSelector> {
                 height: 60.0,
                 initialPage: _selected,
                 onPageChanged: (index, reason) {
-                  final filter = awesomePresetFiltersList[index];
+                  final mask = awesomePresetMasksList[index];
 
                   setState(() {
                     _selected = index;
                   });
 
                   HapticFeedback.selectionClick();
-                  widget.state.setFilter(filter);
+                  widget.state.setMask(mask);
                 },
                 enableInfiniteScroll: false,
                 viewportFraction: 0.165,
               ),
               carouselController: _controller,
-              items: awesomePresetFiltersList.map((filter) {
+              items: awesomePresetMasksList.map((filter) {
                 return Builder(
                   builder: (BuildContext context) {
                     return AwesomeBouncingWidget(
@@ -83,8 +83,8 @@ class _AwesomeFilterSelectorState extends State<AwesomeFilterSelector> {
                           duration: const Duration(milliseconds: 700),
                         );
                       },
-                      child: _FilterPreview(
-                        filter: filter.preview,
+                      child: _MaskPreview(
+                        mask: filter.preview,
                         textureId: _textureId,
                       ),
                     );
@@ -120,13 +120,13 @@ class _AwesomeFilterSelectorState extends State<AwesomeFilterSelector> {
   }
 }
 
-class _FilterPreview extends StatelessWidget {
-  final ColorFilter filter;
+class _MaskPreview extends StatelessWidget {
+  final CustomPaint mask;
   final int? textureId;
 
-  const _FilterPreview({
+  const _MaskPreview({
     Key? key,
-    required this.filter,
+    required this.mask,
     required this.textureId,
   }) : super(key: key);
 
@@ -138,9 +138,8 @@ class _FilterPreview extends StatelessWidget {
         width: 60,
         height: 60,
         child: textureId != null
-            ? ColorFiltered(
-                colorFilter: filter,
-                child: OverflowBox(
+            ? Stack(children: [
+                OverflowBox(
                   alignment: Alignment.center,
                   child: FittedBox(
                     fit: BoxFit.cover,
@@ -152,7 +151,8 @@ class _FilterPreview extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+                mask
+              ])
             : const SizedBox.shrink(),
       ),
     );

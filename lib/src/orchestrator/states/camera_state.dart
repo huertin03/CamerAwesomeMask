@@ -1,6 +1,7 @@
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
 import 'package:camerawesome/src/orchestrator/camera_context.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
@@ -152,8 +153,8 @@ abstract class CameraState {
     cameraContext.toggleFilterSelector();
   }
 
-  Future<void> setFilter(AwesomeFilter newFilter) {
-    return cameraContext.setFilter(newFilter);
+  Future<void> setMask(AwesomeMask newMask) {
+    return cameraContext.setMask(newMask);
   }
 
   /// The sensor config allows you to
@@ -165,11 +166,11 @@ abstract class CameraState {
 
   Stream<SensorConfig> get sensorConfig$ => cameraContext.sensorConfig$;
 
-  Stream<bool> get filterSelectorOpened$ => cameraContext.filterSelectorOpened$;
+  Stream<bool> get maskSelectorOpened$ => cameraContext.maskSelectorOpened$;
 
-  Stream<AwesomeFilter> get filter$ => cameraContext.filter$;
+  Stream<AwesomeMask> get filter$ => cameraContext.mask$;
 
-  AwesomeFilter get filter => cameraContext.filterController.value;
+  AwesomeMask get mask => cameraContext.maskController.value;
 
   /// Switch to a state between
   /// - [CaptureMode.photo]

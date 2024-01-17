@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
 import 'package:camerawesome/src/widgets/preview/awesome_preview_fit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -187,16 +188,19 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                             : null,
                     onPreviewScale: widget.onPreviewScale,
                     initialZoom: widget.state.sensorConfig.zoom,
-                    child: StreamBuilder<AwesomeFilter>(
+                    child: StreamBuilder<AwesomeMask>(
                       //FIX performances
                       stream: widget.state.filter$,
                       builder: (context, snapshot) {
-                        return snapshot.hasData &&
-                                snapshot.data != AwesomeFilter.None
-                            ? ColorFiltered(
-                                colorFilter: snapshot.data!.preview,
-                                child: _textures.first,
-                              )
+                        return snapshot.hasData
+                            ? Stack(alignment: Alignment.center, children: [
+                                _textures.first,
+                                IgnorePointer(
+                                    child: RepaintBoundary(
+                                  child: snapshot.data!.preview,
+                                )),
+                                _textures.first,
+                              ])
                             : _textures.first;
                       },
                     ),

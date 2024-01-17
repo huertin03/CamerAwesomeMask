@@ -4,6 +4,7 @@ import 'package:camerawesome/src/orchestrator/models/filters/awesome_filter.dart
 // we need to adjust them
 List<AwesomeFilter> awesomePresetFiltersList = [
   AwesomeFilter.None,
+  // TODO: Add mask widget
   AwesomeFilter.AddictiveBlue,
   AwesomeFilter.AddictiveRed,
   AwesomeFilter.Aden,

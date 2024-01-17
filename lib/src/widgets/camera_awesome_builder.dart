@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
 import 'package:camerawesome/src/orchestrator/camera_context.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
+import 'package:camerawesome/src/orchestrator/models/masks/awesome_masks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,12 +108,12 @@ class CameraAwesomeBuilder extends StatefulWidget {
   final PictureInPictureConfigBuilder? pictureInPictureConfigBuilder;
 
   /// THe default filter to use when the camera is started.
-  final AwesomeFilter? defaultFilter;
+  final AwesomeMask? defaultMask;
 
   /// List of filters to show in the built-in interface.
   /// (default: [awesomePresetFiltersList])
   /// Push null to hide the filter button
-  final List<AwesomeFilter>? availableFilters;
+  final List<AwesomeMask>? availableMasks;
 
   const CameraAwesomeBuilder._({
     required this.sensorConfig,
@@ -121,7 +123,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
     required this.onMediaTap,
     required this.builder,
     required this.previewFit,
-    required this.defaultFilter,
+    required this.defaultMask,
     this.onImageForAnalysis,
     this.imageAnalysisConfig,
     this.onPreviewTapBuilder,
@@ -132,7 +134,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
     this.previewAlignment = Alignment.center,
     this.showPreview = true,
     required this.pictureInPictureConfigBuilder,
-    this.availableFilters,
+    this.availableMasks,
   });
 
   /// Use the camera with the built-in interface.
@@ -175,8 +177,8 @@ class CameraAwesomeBuilder extends StatefulWidget {
     EdgeInsets previewPadding = EdgeInsets.zero,
     Alignment previewAlignment = Alignment.center,
     PictureInPictureConfigBuilder? pictureInPictureConfigBuilder,
-    AwesomeFilter? defaultFilter,
-    List<AwesomeFilter>? availableFilters,
+    AwesomeMask? defaultMask,
+    List<AwesomeMask>? availableMasks,
   }) : this._(
           sensorConfig: sensorConfig ??
               SensorConfig.single(
@@ -205,8 +207,8 @@ class CameraAwesomeBuilder extends StatefulWidget {
           previewPadding: previewPadding,
           previewAlignment: previewAlignment,
           pictureInPictureConfigBuilder: pictureInPictureConfigBuilder,
-          defaultFilter: defaultFilter,
-          availableFilters: availableFilters ?? awesomePresetFiltersList,
+          defaultMask: defaultMask,
+          availableMasks: availableMasks ?? awesomePresetMasksList,
         );
 
   /// 🚧 Experimental
@@ -219,7 +221,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
     Widget? progressIndicator,
     required CameraLayoutBuilder builder,
     required SaveConfig saveConfig,
-    AwesomeFilter? filter,
+    AwesomeMask? mask,
     OnImageForAnalysis? onImageForAnalysis,
     AnalysisConfig? imageAnalysisConfig,
     OnPreviewTap Function(CameraState)? onPreviewTapBuilder,
@@ -229,7 +231,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
     EdgeInsets previewPadding = EdgeInsets.zero,
     Alignment previewAlignment = Alignment.center,
     PictureInPictureConfigBuilder? pictureInPictureConfigBuilder,
-    List<AwesomeFilter>? filters,
+    List<AwesomeMask>? masks,
   }) : this._(
           sensorConfig: sensorConfig ??
               SensorConfig.single(
@@ -240,7 +242,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
           builder: builder,
           saveConfig: saveConfig,
           onMediaTap: null,
-          defaultFilter: filter,
+          defaultMask: mask,
           onImageForAnalysis: onImageForAnalysis,
           imageAnalysisConfig: imageAnalysisConfig,
           onPreviewTapBuilder: onPreviewTapBuilder,
@@ -251,7 +253,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
           previewPadding: previewPadding,
           previewAlignment: previewAlignment,
           pictureInPictureConfigBuilder: pictureInPictureConfigBuilder,
-          availableFilters: filters,
+          availableMasks: masks,
         );
 
   /// Use this constructor when you don't want to take pictures or record videos.
@@ -260,7 +262,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
     SensorConfig? sensorConfig,
     Widget? progressIndicator,
     required CameraLayoutBuilder builder,
-    AwesomeFilter? filter,
+    AwesomeMask? mask,
     OnImageForAnalysis? onImageForAnalysis,
     AnalysisConfig? imageAnalysisConfig,
     OnPreviewTap Function(CameraState)? onPreviewTapBuilder,
@@ -277,7 +279,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
           builder: builder,
           saveConfig: null,
           onMediaTap: null,
-          defaultFilter: filter,
+          defaultMask: mask,
           onImageForAnalysis: onImageForAnalysis,
           imageAnalysisConfig: imageAnalysisConfig,
           onPreviewTapBuilder: onPreviewTapBuilder,
@@ -312,7 +314,7 @@ class CameraAwesomeBuilder extends StatefulWidget {
           builder: builder,
           saveConfig: null,
           onMediaTap: null,
-          defaultFilter: null,
+          defaultMask: null,
           onImageForAnalysis: onImageForAnalysis,
           imageAnalysisConfig: imageAnalysisConfig,
           onPreviewTapBuilder: null,
@@ -381,7 +383,7 @@ class _CameraWidgetBuilder extends State<CameraAwesomeBuilder>
     _cameraContext = CameraContext.create(
       widget.sensorConfig,
       enablePhysicalButton: widget.enablePhysicalButton,
-      filter: widget.defaultFilter ?? AwesomeFilter.None,
+      mask: widget.defaultMask ?? AwesomeMask.None,
       initialCaptureMode: widget.saveConfig?.initialCaptureMode ??
           (widget.showPreview
               ? CaptureMode.preview
@@ -391,7 +393,7 @@ class _CameraWidgetBuilder extends State<CameraAwesomeBuilder>
       analysisConfig: widget.imageAnalysisConfig,
       exifPreferences: widget.saveConfig?.exifPreferences ??
           ExifPreferences(saveGPSLocation: false),
-      availableFilters: widget.availableFilters,
+      availableMasks: widget.availableMasks,
     );
 
     // Initial CameraState is always PreparingState
