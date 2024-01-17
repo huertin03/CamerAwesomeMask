@@ -199,7 +199,6 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                                     child: RepaintBoundary(
                                   child: snapshot.data!.preview,
                                 )),
-                                _textures.first,
                               ])
                             : _textures.first;
                       },
