@@ -148,7 +148,8 @@ class Bourdeaux extends CustomPainter {
     Paint clearPaint = Paint()..blendMode = BlendMode.clear;
 
     // Draw everything outside the shape
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), fillPaint);
+    // canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), fillPaint);
+    canvas.drawRect(Rect.fromLTWH(0, 0, 1000, 700), fillPaint);
 
 // Calculate the bounding rectangle of the path
     // Rect rect = path_0.getBounds();
