@@ -148,23 +148,23 @@ class Bourdeaux extends CustomPainter {
     Paint clearPaint = Paint()..blendMode = BlendMode.clear;
 
     // Draw everything outside the shape
-    // canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), fillPaint);
-    canvas.drawRect(Rect.fromLTWH(0, 0, 1000, 700), fillPaint);
+    // Calculate the center position
+    double centerX = size.width / 2;
+    double centerY = size.height / 2;
 
-// Calculate the bounding rectangle of the path
-    // Rect rect = path_0.getBounds();
+    // Calculate the width and height of the rectangle
+    double rectWidth = size.width;
+    double rectHeight = size.height;
 
-// Calculate the center of the path
-    // Offset pathCenter = rect.center;
+    // Calculate the top-left position of the rectangle to center it
+    double rectX = centerX - (rectWidth / 2);
+    double rectY = centerY - (rectHeight / 2);
 
-// Calculate the center of the canvas
-    // Offset center = Offset(size.width / 2, size.height / 2);
+    // Draw the rectangle centered on the canvas
+    canvas.drawRect(
+        Rect.fromLTWH(rectX, rectY, rectWidth, rectHeight), fillPaint);
 
-// Calculate the translation offset
-    // Offset offset = center - pathCenter;
-
-// Translate the path
-    // Path centeredPath = path_0.shift(offset);
+    // Draw the wine bottle shape (to be cleared)
     canvas.drawPath(path_0, clearPaint);
   }
 

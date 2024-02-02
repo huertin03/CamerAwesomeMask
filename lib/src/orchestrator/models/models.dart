@@ -10,4 +10,5 @@ export 'save_config.dart';
 export 'sensor_config.dart';
 export 'permission_utils.dart';
 export 'filters/awesome_filter.dart';
+export 'masks/awesome_mask.dart';
 export 'analysis/analysis.dart';

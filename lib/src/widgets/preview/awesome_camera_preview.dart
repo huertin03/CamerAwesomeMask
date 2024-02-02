@@ -192,14 +192,45 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                       //FIX performances
                       stream: widget.state.filter$,
                       builder: (context, snapshot) {
-                        // print(snapshot.data?.name ?? 'No tiene data');
+                        print(snapshot.data?.name ?? 'No tiene data');
+
                         return snapshot.hasData
                             ? Stack(alignment: Alignment.center, children: [
                                 _textures.first,
-                                IgnorePointer(
-                                    child: RepaintBoundary(
-                                  child: snapshot.data!.preview,
-                                )),
+                                Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Row(children: [
+                                      Expanded(
+                                          child: Container(
+                                              color: const Color.fromARGB(
+                                                  80, 0, 0, 0))),
+                                      IgnorePointer(
+                                          child: RepaintBoundary(
+                                        child: snapshot.data!.preview,
+                                      )),
+                                      Expanded(
+                                          child: Container(
+                                              color: const Color.fromARGB(
+                                                  80, 0, 0, 0))),
+                                    ]),
+                                    Column(children: [
+                                      Expanded(
+                                          child: Container(
+                                              color: const Color.fromARGB(
+                                                  80, 0, 0, 0))),
+                                      SizedBox(
+                                        height: snapshot.data!.preview.size
+                                            .height, // Asegúrate de reemplazar esto con la altura de tu CustomPaint
+                                        child: Container(),
+                                      ),
+                                      Expanded(
+                                          child: Container(
+                                              color: const Color.fromARGB(
+                                                  80, 0, 0, 0))),
+                                    ]),
+                                  ],
+                                ),
                               ])
                             : _textures.first;
                       },

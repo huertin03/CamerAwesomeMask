@@ -90,7 +90,7 @@ class CameraPage extends StatelessWidget {
               },
             );
           },
-          availableFilters: awesomePresetFiltersList,
+          availableMasks: awesomePresetFiltersList,
         ),
       ),
     );

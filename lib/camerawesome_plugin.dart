@@ -6,7 +6,6 @@ import 'package:camerawesome/pigeon.dart';
 import 'package:camerawesome/src/logger.dart';
 import 'package:camerawesome/src/orchestrator/adapters/pigeon_sensor_adapter.dart';
 import 'package:camerawesome/src/orchestrator/models/camera_physical_button.dart';
-import 'package:camerawesome/src/orchestrator/models/masks/awesome_mask.dart';
 import 'package:collection/collection.dart';
 import 'package:colorfilter_generator/presets.dart';
 import 'package:flutter/services.dart';
