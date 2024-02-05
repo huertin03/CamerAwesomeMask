@@ -197,38 +197,20 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                         return snapshot.hasData
                             ? Stack(alignment: Alignment.center, children: [
                                 _textures.first,
-                                Stack(
-                                  alignment: Alignment.center,
+                                Column(
                                   children: [
-                                    Row(children: [
-                                      Expanded(
-                                          child: Container(
-                                              color: const Color.fromARGB(
-                                                  80, 0, 0, 0))),
-                                      IgnorePointer(
-                                          child: RepaintBoundary(
-                                        child: snapshot.data!.preview,
-                                      )),
-                                      Expanded(
-                                          child: Container(
-                                              color: const Color.fromARGB(
-                                                  80, 0, 0, 0))),
-                                    ]),
-                                    Column(children: [
-                                      Expanded(
-                                          child: Container(
-                                              color: const Color.fromARGB(
-                                                  80, 0, 0, 0))),
-                                      SizedBox(
-                                        height: snapshot.data!.preview.size
-                                            .height, // Asegúrate de reemplazar esto con la altura de tu CustomPaint
-                                        child: Container(),
-                                      ),
-                                      Expanded(
-                                          child: Container(
-                                              color: const Color.fromARGB(
-                                                  80, 0, 0, 0))),
-                                    ]),
+                                    Expanded(
+                                        child: Container(
+                                            color: const Color.fromARGB(
+                                                80, 0, 0, 0))),
+                                    IgnorePointer(
+                                        child: RepaintBoundary(
+                                      child: snapshot.data!.preview,
+                                    )),
+                                    Expanded(
+                                        child: Container(
+                                            color: const Color.fromARGB(
+                                                80, 0, 0, 0))),
                                   ],
                                 ),
                               ])
